@@ -1,0 +1,12 @@
+{
+  "name": "setlog-mvp",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A minimal Setlog-style daily vlog MVP with upload intents, hourly cadence, timeline, and daily vlog composition plans.",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,10 @@
+page {
+  height: 100%;
+  background: #05070d;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+button::after {
+  border: none;
+}

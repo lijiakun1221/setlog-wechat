@@ -1,0 +1,156 @@
+{
+  "users": [
+    {
+      "id": "user_alice",
+      "name": "Alice",
+      "avatarUrl": "https://api.dicebear.com/9.x/thumbs/svg?seed=Alice",
+      "createdAt": "2026-04-23T16:35:42.201Z"
+    },
+    {
+      "id": "user_bob",
+      "name": "Bob",
+      "avatarUrl": "https://api.dicebear.com/9.x/thumbs/svg?seed=Bob",
+      "createdAt": "2026-04-23T16:35:42.205Z"
+    }
+  ],
+  "sessions": [],
+  "circles": [
+    {
+      "id": "log_daily",
+      "name": "Daily Light",
+      "description": "Compatibility seed circle for the current MVP.",
+      "ownerId": "user_alice",
+      "createdAt": "2026-04-23T16:35:42.205Z"
+    }
+  ],
+  "circleMembers": [
+    {
+      "circleId": "log_daily",
+      "userId": "user_alice",
+      "role": "owner",
+      "joinedAt": "2026-04-23T16:35:42.205Z"
+    },
+    {
+      "circleId": "log_daily",
+      "userId": "user_bob",
+      "role": "member",
+      "joinedAt": "2026-04-23T16:35:42.205Z"
+    }
+  ],
+  "logs": [
+    {
+      "id": "log_daily",
+      "name": "Daily Light",
+      "ownerId": "user_alice",
+      "createdAt": "2026-04-23T16:35:42.205Z"
+    }
+  ],
+  "logMembers": [
+    {
+      "userId": "user_alice",
+      "logId": "log_daily",
+      "role": "owner",
+      "joinedAt": "2026-04-23T16:35:42.244Z"
+    },
+    {
+      "userId": "user_bob",
+      "logId": "log_daily",
+      "role": "member",
+      "joinedAt": "2026-04-23T16:35:42.244Z"
+    }
+  ],
+  "uploadIntents": [],
+  "contents": [
+    {
+      "id": "content_seed_1",
+      "userId": "user_alice",
+      "circleId": "log_daily",
+      "mediaId": "clip_seed_1",
+      "uploadId": "upl_seed_1",
+      "note": "Seed clip for a fresh timeline.",
+      "publishedAt": "2026-04-23T16:35:42.205Z",
+      "recordedAt": "2026-04-23T16:35:42.205Z",
+      "createdAt": "2026-04-23T16:35:42.205Z",
+      "contentType": "video/mp4",
+      "contentLength": 0,
+      "storageProvider": "local",
+      "storageBucket": null,
+      "storageKey": null,
+      "storageUrl": null
+    }
+  ],
+  "mediaAssets": [],
+  "clips": [
+    {
+      "id": "clip_seed_1",
+      "uploadId": "upl_seed_1",
+      "userId": "user_alice",
+      "logId": "log_daily",
+      "recordedAt": "2026-04-23T16:35:42.205Z",
+      "createdAt": "2026-04-23T16:35:42.205Z",
+      "durationSeconds": 2,
+      "note": "Seed clip for a fresh timeline.",
+      "dateKey": "2026-04-23",
+      "hourKey": "2026-04-23T18",
+      "storagePath": null,
+      "storageUrl": null,
+      "contentLength": 0,
+      "contentType": "video/mp4"
+    },
+    {
+      "id": "clip_1a86e41b-04d",
+      "uploadId": "upl_3caf4244-792",
+      "userId": "user_bob",
+      "logId": "log_daily",
+      "recordedAt": "2026-04-23T16:35:42.000Z",
+      "createdAt": "2026-04-23T16:54:15.988Z",
+      "durationSeconds": 2,
+      "note": "Walking to coffee",
+      "dateKey": "2026-04-23",
+      "hourKey": "2026-04-23T18",
+      "storagePath": "/Volumes/PortableSSD/setlog/data/uploads/upl_3caf4244-792.bin",
+      "storageUrl": "/data/uploads/upl_3caf4244-792.bin",
+      "contentLength": 16,
+      "contentType": "video/mp4"
+    }
+  ],
+  "dailyVlogs": [
+    {
+      "id": "vlog_dff069e1-0ba",
+      "userId": "user_bob",
+      "dateKey": "2026-04-23",
+      "timeZone": "Europe/Rome",
+      "clipIds": [
+        "clip_1a86e41b-04d"
+      ],
+      "status": "planned",
+      "manifest": {
+        "userId": "user_bob",
+        "dateKey": "2026-04-23",
+        "timeZone": "Europe/Rome",
+        "generatedAt": "2026-04-23T16:54:22.210Z",
+        "clipCount": 1,
+        "clips": [
+          {
+            "index": 0,
+            "clipId": "clip_1a86e41b-04d",
+            "uploadId": "upl_3caf4244-792",
+            "recordedAt": "2026-04-23T16:35:42.000Z",
+            "note": "Walking to coffee",
+            "durationSeconds": 2,
+            "storageUrl": "/data/uploads/upl_3caf4244-792.bin"
+          }
+        ],
+        "ffmpeg": {
+          "format": "concat",
+          "music": "optional",
+          "captions": "optional"
+        }
+      },
+      "outputPath": "/Volumes/PortableSSD/setlog/data/artifacts/daily_user_bob_2026-04-23_7bdd48b8.json",
+      "outputUrl": "/data/artifacts/daily_user_bob_2026-04-23_7bdd48b8.json",
+      "createdAt": "2026-04-23T16:54:22.212Z"
+    }
+  ],
+  "reminders": []
+}

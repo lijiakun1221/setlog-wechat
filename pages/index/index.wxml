@@ -1,0 +1,110 @@
+<view class="page">
+  <!-- Camera View -->
+  <view wx:if="{{activeTab === 'camera'}}" class="stage">
+    <view class="camera-shell">
+      <!-- 实时摄像头预览 -->
+      <camera
+        class="camera"
+        device-position="{{devicePosition}}"
+        flash="{{flashMode}}"
+        frame-size="large"
+        resolution="high"
+        binderror="onCameraError"
+      ></camera>
+
+      <!-- 视觉遮罩，尽量贴近 iOS 上层质感 -->
+      <view class="overlay overlay-top"></view>
+      <view class="overlay overlay-bottom"></view>
+      <view class="overlay overlay-soft"></view>
+
+      <!-- 左上角关闭按钮 -->
+      <view class="close-button" bindtap="tapClose">×</view>
+
+      <!-- 中间大时间 -->
+      <view class="time-rail">
+        <view class="time-label">{{clockLabel}}</view>
+      </view>
+
+      <!-- 右侧录制进度条 -->
+      <view class="progress-rail">
+        <view class="progress-text">{{recordingLabel}}</view>
+        <view class="progress-track">
+          <view class="progress-fill {{recording ? 'progress-fill-active' : ''}}" style="height: {{recordingProgress}}%;"></view>
+        </view>
+      </view>
+
+      <!-- 底部工具栏 -->
+      <view class="control-bar">
+        <view class="tool-button tool-button-left {{flashMode === 'on' ? 'tool-button-active' : ''}}" bindtap="toggleFlash">
+          ⚡
+        </view>
+
+        <view
+          class="capture-button {{recording ? 'capture-button-recording' : ''}} {{capturePressed ? 'capture-button-pressed' : ''}}"
+          bindtap="startRecording"
+        >
+          <view class="capture-ring"></view>
+          <view class="capture-face">
+            <view class="capture-eye capture-eye-left"></view>
+            <view class="capture-eye capture-eye-right"></view>
+            <view class="capture-mouth"></view>
+          </view>
+        </view>
+
+        <view class="tool-button tool-button-right" bindtap="flipCamera">
+          🔄
+        </view>
+      </view>
+
+      <!-- 录制时的轻提示 -->
+      <view wx:if="{{recording}}" class="recording-badge">REC · {{recordingLabel}}</view>
+
+      <!-- 相机错误提示 -->
+      <view wx:if="{{cameraError}}" class="camera-error">
+        <view class="camera-error-text">{{cameraError}}</view>
+        <view class="camera-error-action" bindtap="retryPermission">重新授权</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Logs View -->
+  <view wx:else class="logs-screen">
+    <view class="logs-header">
+      <view class="logs-title">logs</view>
+      <view class="logs-subtitle">recent clips · {{clips.length}}</view>
+    </view>
+
+    <scroll-view class="logs-list" scroll-y="true">
+      <block wx:if="{{clips.length}}">
+        <view class="log-card" wx:for="{{clips}}" wx:for-item="item" wx:key="id">
+          <view class="log-card-main">
+            <view class="log-card-title">{{item.userName}}</view>
+            <view class="log-card-meta">{{item.logName}} · {{item.recordedLocal}}</view>
+          </view>
+          <view class="log-card-right">
+            <view class="log-card-duration">{{item.durationSeconds}}s</view>
+            <view class="log-card-date">{{item.dateLabel}}</view>
+          </view>
+        </view>
+      </block>
+
+      <view wx:else class="logs-empty">
+        <view class="logs-empty-title">暂无片段</view>
+        <view class="logs-empty-subtitle">切回 camera 拍第一条视频。</view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 底部 tab -->
+  <view class="bottom-dock">
+    <view class="tab-pill {{activeTab === 'camera' ? 'tab-pill-active' : ''}}" bindtap="switchTab" data-tab="camera">
+      camera
+    </view>
+    <view class="tab-pill {{activeTab === 'logs' ? 'tab-pill-active' : ''}}" bindtap="switchTab" data-tab="logs">
+      logs
+    </view>
+  </view>
+
+  <!-- 隐藏式状态文本，便于调试与反馈 -->
+  <view class="status-line">{{statusText}}</view>
+</view>

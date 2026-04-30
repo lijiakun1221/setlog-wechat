@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "setlog",
+    "navigationBarBackgroundColor": "#050816",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#050816",
+    "navigationStyle": "custom"
+  },
+  "style": "v2"
+}

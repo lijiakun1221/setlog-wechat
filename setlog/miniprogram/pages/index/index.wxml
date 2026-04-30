@@ -1,0 +1,201 @@
+<view class="page-shell">
+  <view class="ambient ambient-left"></view>
+  <view class="ambient ambient-right"></view>
+
+  <scroll-view class="scrollarea" scroll-y="true">
+    <view class="page">
+      <view class="topbar">
+        <view class="topbar-brand">
+          <view class="brand-mark">s</view>
+          <view>
+            <view class="brand-name">setlog</view>
+            <view class="brand-subtitle">daily vlog diary</view>
+          </view>
+        </view>
+        <view class="topbar-chip">auto vlog</view>
+      </view>
+
+      <view class="hero">
+        <view class="eyebrow">轻量记录 · 自动拼接 · 节奏感时间线</view>
+        <view class="hero-title">把每一天自动变成一条 vlog</view>
+        <view class="hero-copy">每小时最多 1 条，单条视频限制 2 秒，录完即传，日终自动生成回顾计划。</view>
+
+        <view class="pills">
+          <view class="pill">2 秒限制</view>
+          <view class="pill">1 次 / 小时</view>
+          <view class="pill">自动保存</view>
+        </view>
+
+        <view class="metrics">
+          <view class="metric-card">
+            <view class="metric-value">{{todayClipCount}}</view>
+            <view class="metric-label">今日片段</view>
+          </view>
+          <view class="metric-card">
+            <view class="metric-value">{{selectedLogClipCount}}</view>
+            <view class="metric-label">当前 log 片段</view>
+          </view>
+          <view class="metric-card">
+            <view class="metric-value">{{totalClipCount}}</view>
+            <view class="metric-label">全部记录</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="panel panel-featured">
+        <view class="panel-head">
+          <view>
+            <view class="panel-kicker">Quick capture</view>
+            <view class="panel-title">现在拍一条，马上进时间线</view>
+          </view>
+          <view class="status-pill">{{selectedUserName || '未选用户'}}</view>
+        </view>
+
+        <view class="capture-grid">
+          <view class="capture-summary">
+            <view class="capture-row">
+              <text class="capture-label">当前 log</text>
+              <text class="capture-value">{{selectedLogName || '请选择 log'}}</text>
+            </view>
+            <view class="capture-row">
+              <text class="capture-label">拍摄时间</text>
+              <text class="capture-value">{{recordedAt}}</text>
+            </view>
+            <view class="capture-row">
+              <text class="capture-label">规则</text>
+              <text class="capture-value">2 秒 / 1 小时 / 自动落库</text>
+            </view>
+          </view>
+        </view>
+
+        <button class="primary-button" bindtap="recordAndUpload">录制 2 秒并上传</button>
+        <view class="hint-text">系统会自动校验上传频率，并把片段写入时间线。</view>
+      </view>
+
+      <view class="panel">
+        <view class="panel-head">
+          <view>
+            <view class="panel-kicker">Setup</view>
+            <view class="panel-title">选择身份与记录对象</view>
+          </view>
+        </view>
+
+        <view class="field-grid">
+          <view class="field">
+            <text class="label">用户</text>
+            <picker mode="selector" range="{{userNames}}" value="{{userIndex}}" bindchange="onUserChange">
+              <view class="picker">{{selectedUserName || '请选择用户'}}</view>
+            </picker>
+          </view>
+
+          <view class="field">
+            <text class="label">log</text>
+            <picker mode="selector" range="{{logNames}}" value="{{logIndex}}" bindchange="onLogChange">
+              <view class="picker">{{selectedLogName || '请选择 log'}}</view>
+            </picker>
+          </view>
+
+          <view class="field field-full">
+            <text class="label">片段说明</text>
+            <input class="input" value="{{note}}" placeholder="今天在做什么" placeholder-class="input-placeholder" bindinput="onNoteInput" />
+          </view>
+        </view>
+      </view>
+
+      <view class="panel">
+        <view class="panel-head">
+          <view>
+            <view class="panel-kicker">Timeline</view>
+            <view class="panel-title">{{dateKey}} 的片段</view>
+          </view>
+          <view class="status-pill subtle">{{selectedDateClipCount}} 条</view>
+        </view>
+
+        <block wx:if="{{selectedDateClips.length}}">
+          <view class="timeline-item" wx:for="{{selectedDateClips}}" wx:for-item="item" wx:for-index="index" wx:key="id">
+            <view class="timeline-dot"></view>
+            <view class="timeline-body">
+              <view class="timeline-title">{{item.userName}} · {{item.logName}}</view>
+              <view class="timeline-meta">{{item.recordedLocal}}</view>
+              <view class="timeline-note">{{item.note || '没有备注'}}</view>
+            </view>
+            <view class="timeline-tail">{{item.durationSeconds}}s</view>
+          </view>
+        </block>
+        <view wx:else class="empty-state">这一天还没有片段，先录一条吧。</view>
+      </view>
+
+      <view class="panel">
+        <view class="panel-head">
+          <view>
+            <view class="panel-kicker">My logs</view>
+            <view class="panel-title">你的 log 列表</view>
+          </view>
+          <view class="status-pill subtle">{{logs.length}} 个</view>
+        </view>
+
+        <view class="log-list">
+          <view class="log-card {{index === logIndex ? 'log-card-active' : ''}}" wx:for="{{logs}}" wx:for-item="item" wx:for-index="index" wx:key="id">
+            <view class="log-top">
+              <view class="log-name">{{item.name}}</view>
+              <view class="log-badge">{{item.clipCount}} clips</view>
+            </view>
+            <view class="log-meta">成员 {{item.memberCount}} · 最近 {{item.lastRecordedAtLabel || '暂无'}}</view>
+            <view class="log-note">{{item.lastClipNote}}</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="panel">
+        <view class="panel-head">
+          <view>
+            <view class="panel-kicker">Daily vlog</view>
+            <view class="panel-title">生成每日回顾</view>
+          </view>
+          <view class="status-pill subtle">{{selectedDailyVlogStatusText}}</view>
+        </view>
+
+        <view class="field-grid">
+          <view class="field field-full">
+            <text class="label">日期</text>
+            <picker mode="date" value="{{dateKey}}" bindchange="onDateChange">
+              <view class="picker">{{dateKey}}</view>
+            </picker>
+          </view>
+        </view>
+
+        <view class="daily-card">
+          <view class="daily-line">选中日期共有 {{selectedDateClipCount}} 条片段。</view>
+          <view class="daily-line">当前生成状态：{{selectedDailyVlogStatusText}}</view>
+          <view class="daily-line" wx:if="{{selectedDailyVlogOutputUrl}}">输出文件：{{selectedDailyVlogOutputUrl}}</view>
+          <view class="daily-line" wx:if="{{selectedDailyVlogClipCount}}">计划包含 {{selectedDailyVlogClipCount}} 条片段。</view>
+        </view>
+
+        <button class="secondary-button" bindtap="generateDailyVlog">生成每日 vlog</button>
+      </view>
+
+      <view class="panel">
+        <view class="panel-head">
+          <view>
+            <view class="panel-kicker">Create log</view>
+            <view class="panel-title">新建一个日常组</view>
+          </view>
+        </view>
+
+        <view class="field-grid">
+          <view class="field field-full">
+            <text class="label">名称</text>
+            <input class="input" value="{{newLogName}}" placeholder="例如：周末日记" placeholder-class="input-placeholder" bindinput="onNewLogNameInput" />
+          </view>
+        </view>
+
+        <button class="secondary-button" bindtap="createLog">创建 log</button>
+      </view>
+
+      <view class="status-panel">
+        <view class="status-title">状态</view>
+        <view class="status-text">{{statusText}}</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

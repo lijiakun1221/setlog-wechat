@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+setlog/node_modules/
+
+# WeChat developer private config
+project.private.config.json
+setlog/miniprogram/project.private.config.json
+
+# Runtime data and generated artifacts
+setlog/data/uploads/
+setlog/data/artifacts/
+
+# Logs
+*.log

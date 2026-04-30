@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>setlog MVP</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">弱编辑 + 强时间线 + 小圈子社交</p>
+          <h1>setlog MVP</h1>
+          <p class="lede">
+            每小时最多一条 2 秒片段，服务端校验冷却窗口，上传后进入时间线，日终生成拼接计划。
+          </p>
+        </div>
+        <div class="stats">
+          <article>
+            <strong id="clipLimit">2s</strong>
+            <span>单条视频上限</span>
+          </article>
+          <article>
+            <strong id="cooldownLimit">60m</strong>
+            <span>上传冷却窗口</span>
+          </article>
+          <article>
+            <strong id="timeZoneLabel">Europe/Rome</strong>
+            <span>默认时区</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>1. 创建 log</h2>
+          <form id="createLogForm" class="stack">
+            <label>
+              log 名称
+              <input name="name" placeholder="例如：周末日记" />
+            </label>
+            <label>
+              拥有者
+              <select name="ownerId" id="ownerSelect"></select>
+            </label>
+            <button type="submit">创建 log</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h2>2. 上传片段</h2>
+          <form id="uploadForm" class="stack">
+            <label>
+              用户
+              <select name="userId" id="userSelect"></select>
+            </label>
+            <label>
+              log
+              <select name="logId" id="logSelect"></select>
+            </label>
+            <label>
+              录制时间
+              <input name="recordedAt" id="recordedAtInput" />
+            </label>
+            <label>
+              时长（秒）
+              <input name="durationSeconds" type="number" step="0.1" min="0.1" max="2" value="2" />
+            </label>
+            <label>
+              片段说明
+              <input name="note" placeholder="今天在做什么" />
+            </label>
+            <label>
+              视频文件
+              <input name="media" type="file" accept="video/*" />
+            </label>
+            <button type="submit">获取上传意图并直传</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h2>3. 生成每日 vlog</h2>
+          <form id="vlogForm" class="stack">
+            <label>
+              用户
+              <select name="userId" id="vlogUserSelect"></select>
+            </label>
+            <label>
+              日期
+              <input name="date" id="dateInput" />
+            </label>
+            <button type="submit">生成拼接计划</button>
+          </form>
+        </article>
+      </section>
+
+      <section class="card">
+        <div class="sectionHead">
+          <h2>时间线</h2>
+          <button id="refreshButton" type="button">刷新</button>
+        </div>
+        <div id="timeline" class="timeline"></div>
+      </section>
+
+      <section class="card">
+        <h2>日志</h2>
+        <pre id="log" class="log"></pre>
+      </section>
+    </main>
+    <script type="module" src="/assets/app.js"></script>
+  </body>
+</html>
